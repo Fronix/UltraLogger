@@ -1,0 +1,6 @@
+name: UltraLogger
+main: org.justyce.MainLogger
+author: _Justyce_
+version: 1.5.2
+description : The Ultimate logger, nothing can be done without be logged into one of the logs of this plugin.
+tester : roelmb
