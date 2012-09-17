@@ -1,5 +1,6 @@
 package org.justyce.sql.logger;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -19,11 +20,12 @@ public class ChatLogger implements Listener{
 	@EventHandler
 	public void onSpeak(AsyncPlayerChatEvent e){
 		String name = e.getPlayer().getName();
+		String message = e.getMessage();
 		if(e.getPlayer().isOp()){
 			name="[Admin] "+name;
 			}
 		name="("+e.getPlayer().getGameMode().name()+")"+name;
-		manager.query("INSERT INTO `chat` (`time`, `playername`, `text`) VALUES (NOW(), '"+name+"', '"+e.getMessage()+"');");
+		manager.query("INSERT INTO `chat` (`time`, `playername`, `text`) VALUES (NOW(), '"+StringEscapeUtils.escapeJava(name)+"', '"+StringEscapeUtils.escapeJava(message)+"');");
 	}
 
 }

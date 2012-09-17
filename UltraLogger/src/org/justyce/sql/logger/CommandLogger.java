@@ -1,5 +1,6 @@
 package org.justyce.sql.logger;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -18,6 +19,7 @@ public class CommandLogger implements Listener{
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e){
 		String name = e.getPlayer().getName();
+		String message = e.getMessage();
 		if(e.getPlayer().isOp()){
 			name= "[Admin] "+name;
 		}
@@ -25,7 +27,7 @@ public class CommandLogger implements Listener{
 		if(manager.getPlugin().getServer().getPluginCommand(e.getMessage())!=null||isServerCommand(e.getMessage())){
 			display ="Yes";
 		}
-		manager.query("INSERT INTO `command`(`time`, `playername`, `cmd`, `worked`) VALUES (NOW(), '"+name+"', '"+e.getMessage()+"', '"+display+"');");
+		manager.query("INSERT INTO `command`(`time`, `playername`, `cmd`, `worked`) VALUES (NOW(), '"+StringEscapeUtils.escapeJava(name)+"', '"+StringEscapeUtils.escapeJava(message)+"', '"+display+"');");
 	}
 	
 	private boolean isServerCommand(String message) {
